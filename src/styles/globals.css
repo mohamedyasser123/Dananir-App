@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #f8fafc;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-text-fill-color: #fff;
+  -webkit-box-shadow: 0 0 0 1000px rgba(255, 255, 255, 0.05) inset;
+  transition: background-color 9999s ease-in-out 0s;
+}
+
+input::-ms-reveal,
+input::-ms-clear {
+  display: none;
+}
