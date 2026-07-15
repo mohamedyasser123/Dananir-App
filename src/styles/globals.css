@@ -23,3 +23,12 @@ input::-ms-reveal,
 input::-ms-clear {
   display: none;
 }
+
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
