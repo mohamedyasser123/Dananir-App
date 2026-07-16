@@ -3,7 +3,7 @@ import { Search, Bell,  ChevronDown, MessageCircle } from 'lucide-react'
 
 export default function Header() {
   return (
-<div className="flex w-full items-center justify-between !px-5 border-b-[0.8px] border-[#E5E7EB] !py-2">
+<div className="flex w-full items-center justify-between px-5 border-b-[0.8px] border-[#E5E7EB] py-2">
           <h1 className=" px-5 text-xl font-bold text-slate-900">Admin</h1>
 
       <div className="flex items-center gap-6">
@@ -13,7 +13,7 @@ export default function Header() {
   <input
     type="text"
     placeholder="Search..."
-    className="w-full h-12 !pl-10 pr-6 rounded-[14px] border border-slate-200 bg-white text-[15px] text-slate-800 placeholder-slate-400 outline-none transition-all duration-200 focus:border-[#D1D5DC]"
+    className="w-full h-12 pl-10 pr-6 rounded-[14px] border border-slate-200 bg-white text-[15px] text-slate-800 placeholder-slate-400 outline-none transition-all duration-200 focus:border-[#D1D5DC]"
   />
 </div>
 

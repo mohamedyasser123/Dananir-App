@@ -4,7 +4,7 @@ import { Outlet } from 'react-router-dom'
 
 export default function AdminLayout() {
   return (
-    <div className="flex min-h-screen w-full bg-[#f5f7fa] text-slate-800">
+    <div className="flex min-h-screen w-full text-slate-800">
 
       <aside className="w-[280px] h-screen sticky top-0 hidden md:block flex-shrink-0 z-30 bg-[#2853bc] border-r border-white/5">
         <Sidebar />
@@ -16,7 +16,7 @@ export default function AdminLayout() {
           <Header />
         </header>
 
-        <main className="flex-1 p-6 overflow-y-auto">
+        <main className="flex-1 min-h-screen bg-white p-6 overflow-y-auto">
           <Outlet />
         </main>
 

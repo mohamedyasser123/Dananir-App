@@ -12,7 +12,7 @@ export const SharedInput = React.forwardRef<HTMLInputElement, InputProps>(
         <input
           type={type}
           className={cn(
-            "flex h-12 w-full rounded-lg border border-white/15 bg-white/5 !px-3 py-2 text-sm text-white placeholder-white/40 outline-none transition-all duration-200 focus:border-[#2f65cd] focus:ring-2 focus:ring-[#2f65cd]/20 disabled:cursor-not-allowed disabled:opacity-50",
+            "flex h-12 w-full rounded-lg border border-white/15 bg-white/5 px-3 py-2 text-sm text-white placeholder-white/40 outline-none transition-all duration-200 focus:border-[#2f65cd] focus:ring-2 focus:ring-[#2f65cd]/20 disabled:cursor-not-allowed disabled:opacity-50",
             
             // 👇 التعديل هنا: بنجبر المتصفح يحافظ على لون الخلفية الداكنة ولون النص الأبيض عند الـ Autofill
             "[-webkit-autofill]:bg-transparent [-webkit-autofill]:text-white",

@@ -11,7 +11,6 @@ export interface SidebarItemConfig {
 
 export interface SidebarNodeProps {
   item: SidebarItemConfig
-  depth?: number
 }
 
 export interface SidebarCollapseProps {
