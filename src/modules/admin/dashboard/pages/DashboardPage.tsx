@@ -1,11 +1,8 @@
-import React from 'react'
+import DashboardContent from '../components/DashboardContent'
+import { useDashboard } from '../hooks/useDashboard'
 
 export default function DashboardPage() {
-  return (
-     <div className="flex h-screen items-center justify-center">
-      <h1 className="text-4xl font-bold">
-        Financial Admin Dashboard
-      </h1>
-    </div>
-  )
+  const dashboard = useDashboard()
+
+  return <DashboardContent {...dashboard} />
 }

@@ -2,11 +2,11 @@ import { memo, useState } from "react"
 import { useLocation } from "react-router-dom"
 import { ChevronDown } from "lucide-react"
 import { cn } from "../../utils/utils"
-import { isItemActive, getIndentStyle } from "../../utils/sidebar"
+import { isItemActive } from "../../utils/sidebar"
 import type { SidebarNodeProps } from "../../types/sidebar"
 import SidebarItem from "./SidebarItem"
 
-function SidebarGroup({ item, depth = 0 }: SidebarNodeProps) {
+function SidebarGroup({ item }: SidebarNodeProps) {
   const { pathname } = useLocation()
   const containsActiveChild = isItemActive(item, pathname)
   const [manualOpen, setManualOpen] = useState(false)
@@ -18,9 +18,8 @@ function SidebarGroup({ item, depth = 0 }: SidebarNodeProps) {
       <button
         type="button"
         onClick={() => setManualOpen((prev) => !prev)}
-        style={getIndentStyle(depth)}
         className={cn(
-          "flex h-14 w-full items-center justify-between pl-30 pr-6 rounded-2xl text-[17px] font-bold cursor-pointer transition-all duration-200",
+          "flex h-14 w-full items-center justify-between pl-[13px] pr-6 rounded-2xl text-[17px] font-bold cursor-pointer transition-all duration-200",
           containsActiveChild
             ? "bg-white text-[#254b9c] "
             : "text-white/90 hover:bg-white/5"
@@ -39,12 +38,12 @@ function SidebarGroup({ item, depth = 0 }: SidebarNodeProps) {
       </button>
 
       {isOpen && item.children && (
-        <div className="flex flex-col space-y-2">
+        <div className="flex flex-col space-y-2 pl-5">
           {item.children.map((child) =>
             child.children ? (
-              <SidebarGroup key={child.title} item={child} depth={depth + 1} />
+              <SidebarGroup key={child.title} item={child} />
             ) : (
-              <SidebarItem key={child.title} item={child} depth={depth + 1} />
+              <SidebarItem key={child.title} item={child} />
             )
           )}
         </div>
