@@ -1,5 +1,5 @@
 import {
-  Home, Users, Shield, Crown, User, Landmark, Lock,
+  Home, Users, Shield, Crown, Landmark, Lock,
   Building2, MessageSquare, Bell, Mail, MessageCircle,
   Megaphone, DollarSign, Briefcase,
 } from "lucide-react"
@@ -29,44 +29,38 @@ export const sidebarConfig: SidebarItemConfig[] = [
     icon: Shield,
     path: "/admin/roles-permissions",
     permission: "roles_permissions.view",
-     children: [
+    children: [
       {
         title: "Memberships",
-        icon: Users,
+        icon: Crown,
         path: "/admin/roles-permissions/memberships",
-        permission: "platform_management.admin.view",
+        permission: "roles_permissions.memberships.view",
+      },
+      {
+        title: "User segment",
+        icon: Lock,
+        path: "/admin/roles-permissions/user-segment",
+        permission: "roles_permissions.user_segment.view",
+      },
+      {
+        title: "Banks",
+        icon: Landmark,
+        path: "/admin/roles-permissions/banks",
+        permission: "roles_permissions.banks.view",
+      },
+      {
+        title: "Private",
+        icon: Lock,
+        path: "/admin/roles-permissions/private",
+        permission: "roles_permissions.private.view",
+      },
+      {
+        title: "Company",
+        icon: Building2,
+        path: "/admin/roles-permissions/company",
+        permission: "roles_permissions.company.view",
       },
     ],
-  },
-  {
-    title: "Memberships",
-    icon: Crown,
-    path: "/admin/memberships",
-    permission: "memberships.view",
-  },
-  {
-    title: "User segment",
-    icon: User,
-    path: "/admin/user-segment",
-    permission: "user_segment.view",
-  },
-  {
-    title: "Banks",
-    icon: Landmark,
-    path: "/admin/banks",
-    permission: "banks.view",
-  },
-  {
-    title: "Private",
-    icon: Lock,
-    path: "/admin/private",
-    permission: "private.view",
-  },
-  {
-    title: "Company",
-    icon: Building2,
-    path: "/admin/company",
-    permission: "company.view",
   },
   {
     title: "Communications",
