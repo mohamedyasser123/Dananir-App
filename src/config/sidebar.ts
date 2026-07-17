@@ -29,6 +29,14 @@ export const sidebarConfig: SidebarItemConfig[] = [
     icon: Shield,
     path: "/admin/roles-permissions",
     permission: "roles_permissions.view",
+     children: [
+      {
+        title: "Memberships",
+        icon: Users,
+        path: "/admin/roles-permissions/memberships",
+        permission: "platform_management.admin.view",
+      },
+    ],
   },
   {
     title: "Memberships",

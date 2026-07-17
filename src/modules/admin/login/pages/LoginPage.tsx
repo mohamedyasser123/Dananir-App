@@ -1,4 +1,4 @@
-import { SharedInput } from '../../../../components/shared/SharedInput'
+import { SharedInput } from '../../../../components/shared/inputs/SharedInput'
 import { SharedButton } from '../../../../components/shared/SharedButton'
 import { Eye, EyeOff, Lock } from 'lucide-react'
 import loginPicture from "../assets/LoginPicture.png"
@@ -37,6 +37,7 @@ return (
                 type="email"
                 placeholder="Admin email"
                 {...register("email")}
+                className="border-white/15 bg-white/5 text-white placeholder-white/40 focus:border-[#2f65cd] focus:ring-[#2f65cd]/20 [-webkit-autofill]:bg-transparent [-webkit-autofill]:text-white [-webkit-autofill]:[box-shadow:0_0_0_50px_#132240_inset] [-webkit-autofill]:[text-fill-color:white] autofill:[box-shadow:0_0_0_50px_#132240_inset] autofill:[text-fill-color:white]"
               />
               {errors.email && (
                 <p className="text-xs text-red-400 pl-1 align-start text-left">{errors.email.message}</p>
@@ -48,6 +49,8 @@ return (
                 type={showPassword ? "text" : "password"}
                 placeholder="Password"
                 {...register("password")}
+                className="border-white/15 bg-white/5 text-white placeholder-white/40 focus:border-[#2f65cd] focus:ring-[#2f65cd]/20 [-webkit-autofill]:bg-transparent [-webkit-autofill]:text-white [-webkit-autofill]:[box-shadow:0_0_0_50px_#132240_inset] [-webkit-autofill]:[text-fill-color:white] autofill:[box-shadow:0_0_0_50px_#132240_inset] autofill:[text-fill-color:white]"
+                iconClassName="text-white/40 hover:text-white/70"
                 icon={
                   <button
                     type="button"
