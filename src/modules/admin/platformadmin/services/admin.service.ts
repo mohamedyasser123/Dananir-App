@@ -1,5 +1,6 @@
-import type { AdminUser } from "../types/admin.types"
+import type { AdminDetails, AdminUser } from "../types/admin.types"
 import type { CreateAdminFormValues, UpdateAdminFormValues } from "../schemas/admin.schema"
+import { ROLE_PERMISSIONS } from "../constants/admin.constants"
 
 const NETWORK_DELAY_MS = 600
 
@@ -18,6 +19,17 @@ let admins: AdminUser[] = [
   { id: "8", name: "Maria Garcia", email: "m.garcia@admin.com", role: "Admin", status: "INACTIVE" },
 ]
 
+const adminDetailsMeta: Record<string, { createdAt: string; lastLoginAt: string | null }> = {
+  "1": { createdAt: "2023-01-10T09:00:00.000Z", lastLoginAt: "2026-07-15T08:30:00.000Z" },
+  "2": { createdAt: "2023-03-22T11:15:00.000Z", lastLoginAt: "2026-07-16T14:05:00.000Z" },
+  "3": { createdAt: "2023-05-02T13:40:00.000Z", lastLoginAt: "2026-07-14T09:12:00.000Z" },
+  "4": { createdAt: "2023-06-18T08:20:00.000Z", lastLoginAt: null },
+  "5": { createdAt: "2023-08-09T16:05:00.000Z", lastLoginAt: "2026-07-16T10:45:00.000Z" },
+  "6": { createdAt: "2023-09-27T12:30:00.000Z", lastLoginAt: "2026-07-13T17:20:00.000Z" },
+  "7": { createdAt: "2024-01-14T10:00:00.000Z", lastLoginAt: "2026-07-16T07:55:00.000Z" },
+  "8": { createdAt: "2024-02-05T15:50:00.000Z", lastLoginAt: null },
+}
+
 function generateId(): string {
   const maxId = admins.reduce((max, admin) => Math.max(max, Number(admin.id) || 0), 0)
   return (maxId + 1).toString()
@@ -27,12 +39,20 @@ export async function getAdmins(): Promise<AdminUser[]> {
   return delay([...admins])
 }
 
-export async function getAdminById(id: string): Promise<AdminUser> {
+export async function getAdminById(id: string): Promise<AdminDetails> {
   const admin = admins.find((item) => item.id === id)
   if (!admin) {
     throw new Error(`Admin with id "${id}" was not found`)
   }
-  return delay({ ...admin })
+
+  const meta = adminDetailsMeta[id] ?? { createdAt: new Date().toISOString(), lastLoginAt: null }
+
+  return delay({
+    ...admin,
+    permissions: ROLE_PERMISSIONS[admin.role],
+    createdAt: meta.createdAt,
+    lastLoginAt: meta.lastLoginAt,
+  })
 }
 
 export async function createAdmin(payload: CreateAdminFormValues): Promise<AdminUser> {

@@ -3,6 +3,7 @@ import DashboardPage from "../modules/admin/dashboard/pages/DashboardPage";
 import LoginPage from "../modules/admin/login/pages/LoginPage";
 import AdminLayout from "../layouts/AdminLayout";
 import PlatformManagmentAdmin from "../modules/admin/platformadmin/pages/PlatformManagmentAdmin";
+import AdminDetailsPage from "../modules/admin/platformadmin/pages/AdminDetailsPage";
 
 
 export const router = createBrowserRouter([
@@ -25,6 +26,10 @@ export const router = createBrowserRouter([
       {
         path: "platform-management/admin",
         element: <PlatformManagmentAdmin />,
+      },
+      {
+        path: "platform-management/admin/:id",
+        element: <AdminDetailsPage />,
       },
     ],
   },

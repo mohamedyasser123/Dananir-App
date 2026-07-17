@@ -16,9 +16,10 @@ interface AdminsTableProps {
   data: AdminUser[];
   onEdit: (user: AdminUser) => void;
   onDelete: (id: string) => void;
+  onRowClick: (id: string) => void;
 }
 
-export default function AdminsTable({ data, onEdit, onDelete }: AdminsTableProps) {
+export default function AdminsTable({ data, onEdit, onDelete, onRowClick }: AdminsTableProps) {
   
   // فانكشن لتلوين الـ Role Badge بناءً على الديزاين بالملي
   const getRoleBadgeStyles = (role: AdminRole) => {
@@ -76,9 +77,10 @@ export default function AdminsTable({ data, onEdit, onDelete }: AdminsTableProps
             </TableRow>
           ) : (
             data.map((user) => (
-              <TableRow 
-                key={user.id} 
-                className="border-b border-[#F3F4F6] hover:bg-slate-50/50 last:border-b-0 transition-colors"
+              <TableRow
+                key={user.id}
+                onClick={() => onRowClick(user.id)}
+                className="border-b border-[#F3F4F6] hover:bg-slate-50/50 last:border-b-0 transition-colors cursor-pointer"
               >
                 <TableCell className="font-semibold text-[#101828] text-[14px] py-4 px-6">
                   {user.name}
@@ -110,17 +112,23 @@ export default function AdminsTable({ data, onEdit, onDelete }: AdminsTableProps
                     <Button
                       variant="ghost"
                       size="icon"
-                      onClick={() => onEdit(user)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onEdit(user);
+                      }}
                       className="h-8 w-8 text-[#2563EB] hover:text-[#1D4ED8] hover:bg-[#EFF6FF] rounded-md transition-colors"
                     >
                       <Edit2 className="h-[15px] w-[15px]" />
                     </Button>
-                    
+
                     {/* زرار الحذف */}
                     <Button
                       variant="ghost"
                       size="icon"
-                      onClick={() => onDelete(user.id)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onDelete(user.id);
+                      }}
                       className="h-8 w-8 text-[#EF4444] hover:text-[#DC2626] hover:bg-[#FEF2F2] rounded-md transition-colors"
                     >
                       <Trash2 className="h-[15px] w-[15px]" />
