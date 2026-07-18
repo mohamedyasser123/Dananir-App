@@ -1,7 +1,8 @@
-import React from 'react'
+import PrivateContent from "../../components/PrivateContent"
+import { usePrivateUsers } from "../../hooks/private/usePrivateUsers"
 
 export default function PrivatePage() {
-  return (
-    <div>Private</div>
-  )
+  const privateUsers = usePrivateUsers()
+
+  return <PrivateContent {...privateUsers} />
 }

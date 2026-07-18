@@ -138,6 +138,15 @@ function FormFieldInput<TFieldValues extends FieldValues>({
     case "password":
       return <PasswordFieldInput config={config} controllerField={controllerField} />
 
+    case "custom":
+      return config.render
+        ? config.render({
+            value: controllerField.value,
+            onChange: controllerField.onChange,
+            disabled: config.disabled,
+          })
+        : null
+
     case "text":
     case "email":
     case "number":
@@ -174,10 +183,12 @@ export function FormField<TFieldValues extends FieldValues>({
 
   return (
     <div className={cn("flex flex-col gap-1.5", field.colSpan === 2 && "sm:col-span-2")}>
-      <label htmlFor={field.name} className="text-sm font-medium text-slate-700">
-        {field.label}
-        {field.required && <span className="ml-0.5 text-red-500">*</span>}
-      </label>
+      {field.label && (
+        <label htmlFor={field.name} className="text-sm font-medium text-slate-700">
+          {field.label}
+          {field.required && <span className="ml-0.5 text-red-500">*</span>}
+        </label>
+      )}
 
       <Controller
         name={fieldName}

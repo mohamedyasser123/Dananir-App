@@ -1,5 +1,7 @@
 import type { ReactNode } from "react";
 import { Search, Filter, Plus } from "lucide-react";
+import { SharedSelect } from "./inputs/SharedSelect";
+import type { SelectOption } from "./form/form.types";
 
 interface TableActionsHeaderProps {
   title?: string;
@@ -10,6 +12,11 @@ interface TableActionsHeaderProps {
   showSearch?: boolean;
   showFilter?: boolean;
   onFilterClick?: () => void;
+  /** When provided, renders a labeled select (e.g. "Status") instead of the icon filter button. */
+  filterOptions?: SelectOption[];
+  filterValue?: string;
+  onFilterChange?: (value: string) => void;
+  filterPlaceholder?: string;
   actionButtonText?: string;
   onActionClick?: () => void;
   leftContent?: ReactNode;
@@ -25,15 +32,21 @@ export default function TableActionsHeader({
   showSearch = true,
   showFilter = true,
   onFilterClick,
+  filterOptions,
+  filterValue,
+  onFilterChange,
+  filterPlaceholder = "Status",
   actionButtonText,
   onActionClick,
   leftContent,
   rightContent,
 }: TableActionsHeaderProps) {
   const hasSearch = showSearch && onSearchChange !== undefined;
+  const hasSelectFilter = Boolean(filterOptions && onFilterChange);
+  const hasIconFilter = showFilter && !hasSelectFilter;
   const hasAction = Boolean(actionButtonText && onActionClick);
   const hasLeftSection = Boolean(leftContent || title);
-  const hasSearchGroup = hasSearch || showFilter;
+  const hasSearchGroup = hasSearch || hasSelectFilter || hasIconFilter;
   const hasActionGroup = hasAction || Boolean(rightContent);
 
   if (!hasLeftSection && !hasSearchGroup && !hasActionGroup) {
@@ -67,7 +80,18 @@ export default function TableActionsHeader({
             </div>
           )}
 
-          {showFilter && (
+          {hasSelectFilter && (
+            <div className="shrink-0">
+              <SharedSelect
+                value={filterValue}
+                onValueChange={onFilterChange!}
+                options={filterOptions!}
+                placeholder={filterPlaceholder}
+              />
+            </div>
+          )}
+
+          {hasIconFilter && (
             <button
               onClick={onFilterClick}
               className="h-[42px] px-4 flex items-center gap-2 bg-white border border-[#99A1AF] rounded-[10px] text-[#101828] text-[14px] font-semibold hover:bg-slate-50 active:bg-slate-100 transition-colors shrink-0"

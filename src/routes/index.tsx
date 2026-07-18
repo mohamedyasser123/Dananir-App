@@ -10,6 +10,7 @@ import UserSegmentPage from "../modules/admin/rolesandpermissions/pages/usersegm
 import BanksPage from "../modules/admin/rolesandpermissions/pages/banks/BanksPage";
 import PrivatePage from "../modules/admin/rolesandpermissions/pages/private/PrivatePage";
 import CompanyPage from "../modules/admin/rolesandpermissions/pages/company/CompanyPage";
+import CompanyDetailsPage from "../modules/admin/rolesandpermissions/pages/company/CompanyDetailsPage";
 
 
 export const router = createBrowserRouter([
@@ -63,6 +64,10 @@ export const router = createBrowserRouter([
           {
             path: "company",
             element: <CompanyPage />,
+          },
+          {
+            path: "company/:id",
+            element: <CompanyDetailsPage />,
           },
         ],
       },

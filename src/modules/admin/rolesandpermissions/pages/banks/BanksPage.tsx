@@ -1,7 +1,8 @@
-import React from 'react'
+import BankContent from "../../components/BankContent"
+import { useBanks } from "../../hooks/bank/useBanks"
 
 export default function BanksPage() {
-  return (
-    <div>Banks</div>
-  )
+  const banks = useBanks()
+
+  return <BankContent {...banks} />
 }

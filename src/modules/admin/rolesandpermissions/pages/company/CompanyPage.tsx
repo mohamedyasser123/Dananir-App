@@ -1,7 +1,8 @@
-import React from 'react'
+import CompanyContent from "../../components/CompanyContent"
+import { useCompanies } from "../../hooks/company/useCompanies"
 
 export default function CompanyPage() {
-  return (
-    <div>Company</div>
-  )
+  const companies = useCompanies()
+
+  return <CompanyContent {...companies} />
 }
