@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import type { DefaultValues, FieldValues, Resolver } from "react-hook-form"
 import {
@@ -9,17 +9,21 @@ import {
   DialogDescription,
   DialogFooter,
 } from "../../ui/dialog"
+import { Tabs, TabsList, TabsTab, TabsPanel } from "../../ui/tabs"
 import { SharedButton } from "../SharedButton"
 import { FormField } from "../form/FormField"
 import { FormGrid } from "../form/FormGrid"
-import type { FormFieldConfig } from "../form/form.types"
+import type { FormDialogTab, FormFieldConfig } from "../form/form.types"
 
 interface SharedFormDialogProps<TFieldValues extends FieldValues> {
   open: boolean
   onOpenChange: (open: boolean) => void
   title: string
   description?: string
-  fields: FormFieldConfig[]
+  /** Flat field list. Ignored when `tabs` is provided. */
+  fields?: FormFieldConfig[]
+  /** Renders the form as tabs, each holding its own field group, sharing one form state and footer. */
+  tabs?: FormDialogTab[]
   defaultValues: DefaultValues<TFieldValues>
   onSubmit: (values: TFieldValues) => void
   resolver?: Resolver<TFieldValues>
@@ -34,7 +38,8 @@ export function SharedFormDialog<TFieldValues extends FieldValues>({
   onOpenChange,
   title,
   description,
-  fields,
+  fields = [],
+  tabs,
   defaultValues,
   onSubmit,
   resolver,
@@ -43,6 +48,7 @@ export function SharedFormDialog<TFieldValues extends FieldValues>({
   cancelText = "Cancel",
   columns = 2,
 }: SharedFormDialogProps<TFieldValues>) {
+  const [activeTab, setActiveTab] = useState(tabs?.[0]?.key)
   const {
     control,
     handleSubmit,
@@ -54,7 +60,10 @@ export function SharedFormDialog<TFieldValues extends FieldValues>({
   })
 
   useEffect(() => {
-    if (open) reset(defaultValues)
+    if (open) {
+      reset(defaultValues)
+      setActiveTab(tabs?.[0]?.key)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open, defaultValues, reset])
 
@@ -73,11 +82,33 @@ export function SharedFormDialog<TFieldValues extends FieldValues>({
         </DialogHeader>
 
         <form onSubmit={submit} className="flex flex-col gap-6">
-          <FormGrid columns={columns}>
-            {fields.map((field) => (
-              <FormField key={field.name} field={field} control={control} errors={errors} />
-            ))}
-          </FormGrid>
+          {tabs && tabs.length > 0 ? (
+            <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as string)}>
+              <TabsList>
+                {tabs.map((tab) => (
+                  <TabsTab key={tab.key} value={tab.key}>
+                    {tab.label}
+                  </TabsTab>
+                ))}
+              </TabsList>
+
+              {tabs.map((tab) => (
+                <TabsPanel key={tab.key} value={tab.key}>
+                  <FormGrid columns={tab.columns ?? columns}>
+                    {tab.fields.map((field) => (
+                      <FormField key={field.name} field={field} control={control} errors={errors} />
+                    ))}
+                  </FormGrid>
+                </TabsPanel>
+              ))}
+            </Tabs>
+          ) : (
+            <FormGrid columns={columns}>
+              {fields.map((field) => (
+                <FormField key={field.name} field={field} control={control} errors={errors} />
+              ))}
+            </FormGrid>
+          )}
 
           <DialogFooter>
             <SharedButton
