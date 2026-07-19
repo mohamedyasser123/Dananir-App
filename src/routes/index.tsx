@@ -11,6 +11,11 @@ import BanksPage from "../modules/admin/rolesandpermissions/pages/banks/BanksPag
 import PrivatePage from "../modules/admin/rolesandpermissions/pages/private/PrivatePage";
 import CompanyPage from "../modules/admin/rolesandpermissions/pages/company/CompanyPage";
 import CompanyDetailsPage from "../modules/admin/rolesandpermissions/pages/company/CompanyDetailsPage";
+import NotificationsPage from "../modules/admin/communications/pages/notifications/NotificationsPage";
+import ChatsPage from "../modules/admin/communications/pages/chats/ChatsPage";
+import SmsPage from "../modules/admin/communications/pages/sms/SmsPage";
+import EmailsPage from "../modules/admin/communications/pages/emails/EmailsPage";
+import AppAdsPage from "../modules/admin/app-ads/pages/AppAdsPage";
 
 
 export const router = createBrowserRouter([
@@ -70,6 +75,31 @@ export const router = createBrowserRouter([
             element: <CompanyDetailsPage />,
           },
         ],
+      },
+      {
+        path: "communications",
+        children: [
+          {
+            path: "notifications",
+            element: <NotificationsPage />,
+          },
+          {
+            path: "chats",
+            element: <ChatsPage />,
+          },
+          {
+            path: "sms",
+            element: <SmsPage />,
+          },
+          {
+            path: "emails",
+            element: <EmailsPage />,
+          },
+        ],
+      },
+      {
+        path: "app-ads",
+        element: <AppAdsPage />,
       },
     ],
   },
