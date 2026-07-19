@@ -1,60 +1,41 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // Import الـ Checkbox الافتراضي من شاد سي إن (تأكد من مسار الـ components عندك)
 import { Checkbox } from "@/components/ui/checkbox";
-
-// 1. هيكلة الداتا متقسمة بـ Category وكل سطر جواه الصلاحيات الدقيقة بتاعته ومفاتيح الـ Checkboxes
-const matrixData = [
-    {
-        category: "Users",
-        permissions: [
-            { id: "u_read", code: "users.read", view: true, edite: false, addDelete: false, manage: true },
-            { id: "u_write", code: "users.write", view: true, edite: true, addDelete: false, manage: false },
-            { id: "u_delete", code: "users.delete", view: true, edite: false, addDelete: false, manage: false },
-        ],
-    },
-    {
-        category: "Companies",
-        permissions: [
-            { id: "c_read", code: "companies.read", view: true, edite: false, addDelete: false, manage: false },
-            { id: "c_write", code: "companies.write", view: true, edite: false, addDelete: true, manage: false },
-            { id: "c_delete", code: "companies.delete", view: true, edite: false, addDelete: false, manage: false },
-        ],
-    },
-    {
-        category: "Orders",
-        permissions: [
-            { id: "o_read", code: "orders.read", view: true, edite: false, addDelete: false, manage: false },
-            { id: "o_write", code: "orders.write", view: true, edite: false, addDelete: false, manage: true },
-            { id: "o_delete", code: "orders.delete", view: true, edite: true, addDelete: false, manage: false },
-        ],
-    },
-    {
-        category: "Finance",
-        permissions: [
-            { id: "f_read", code: "finance.read", view: true, edite: false, addDelete: false, manage: false },
-            { id: "f_write", code: "finance.write", view: true, edite: false, addDelete: false, manage: false },
-            { id: "f_reports", code: "finance.reports", view: true, edite: false, addDelete: true, manage: false },
-        ],
-    },
-    {
-        category: "Settings",
-        permissions: [
-            { id: "s_read", code: "settings.read", view: true, edite: false, addDelete: false, manage: false },
-            { id: "s_write", code: "settings.write", view: true, edite: false, addDelete: false, manage: true },
-        ],
-    },
-];
+import type { PermissionCategory } from "../types/role.types";
+import { usePermissionMatrixTemplate } from "../hooks/role/usePermissionMatrixTemplate";
+import { useCreateRole } from "../hooks/role/useCreateRole";
 
 export default function PermissionMatrix() {
     const [roleName, setRoleName] = useState("");
+    const { data: template } = usePermissionMatrixTemplate();
+    const createRole = useCreateRole();
 
     // هنا بنعمل State مرن عشان الـ Checkboxes تشتغل بشكل تفاعلي بالكامل
-    const [permissionsState, setPermissionsState] = useState(matrixData);
+    const [permissionsState, setPermissionsState] = useState<PermissionCategory[]>([]);
+
+    useEffect(() => {
+        if (template) {
+            setPermissionsState(template);
+        }
+    }, [template]);
 
     const handleCheckboxChange = (catIdx: number, permIdx: number, field: 'view' | 'edite' | 'addDelete' | 'manage') => {
         const updatedState = [...permissionsState];
         updatedState[catIdx].permissions[permIdx][field] = !updatedState[catIdx].permissions[permIdx][field];
         setPermissionsState(updatedState);
+    };
+
+    const handleSave = () => {
+        if (!roleName.trim()) return;
+        createRole.mutate(
+            { name: roleName.trim(), matrix: permissionsState },
+            {
+                onSuccess: () => {
+                    setRoleName("");
+                    if (template) setPermissionsState(template);
+                },
+            }
+        );
     };
 
     return (
@@ -198,8 +179,12 @@ export default function PermissionMatrix() {
 
             {/* ================= 3. زرار الحفظ السفلي بلون #2C4F93 ================= */}
             <div className="w-full flex justify-end !mt-2">
-                <button className="h-[46px] px-10 bg-[#2C4F93] hover:bg-[#1E4385] text-white font-bold text-[15px] rounded-[10px] transition-all duration-200 shadow-sm">
-                    Save
+                <button
+                    onClick={handleSave}
+                    disabled={createRole.isPending}
+                    className="h-[46px] px-10 bg-[#2C4F93] hover:bg-[#1E4385] text-white font-bold text-[15px] rounded-[10px] transition-all duration-200 shadow-sm disabled:opacity-60 disabled:cursor-not-allowed"
+                >
+                    {createRole.isPending ? "Saving..." : "Save"}
                 </button>
             </div>
 

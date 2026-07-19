@@ -1,45 +1,15 @@
 import { Shield, SquarePen, Users } from "lucide-react";
+import type { Role } from "../types/role.types";
 
-const rolesData = [
-  {
-    id: 1,
-    title: "Super Admin",
-    userCount: "1 user",
-    headerBg: "bg-[linear-gradient(to_right,#AD46FF,#8200DB)]",
-    isAllPermissions: true,
-    permissions: ["All Permissions"],
-  },
-  {
-    id: 2,
-    title: "Admin",
-    userCount: "3 users",
-    headerBg:"bg-[linear-gradient(to_right,#2B7FFF,#1447E6)]",
-    isAllPermissions: false,
-    permissions: ["users.read", "users.write", "companies.read", "+3 more"],
-  },
-  {
-    id: 3,
-    title: "Manager",
-    userCount: "2 users",
-    headerBg: "bg-[linear-gradient(to_right,#00C950,#008236)]",
-    isAllPermissions: false,
-    permissions: ["users.read", "orders.read", "orders.write", "+1 more"],
-  },
-  {
-    id: 4,
-    title: "Support",
-    userCount: "2 users",
-    headerBg: "bg-[linear-gradient(to_right,#FF6900,#CA3500)]",
-    isAllPermissions: false,
-    permissions: ["users.read", "tickets.read", "tickets.write"],
-  },
-];
+interface RoleCardsProps {
+  roles: Role[];
+}
 
-export default function RoleCards() {
+export default function RoleCards({ roles }: RoleCardsProps) {
   return (
     <div className="w-full !px-2 !py-4">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
-        {rolesData.map((role) => (
+        {roles.map((role) => (
           <div
             key={role.id}
 className="w-full bg-white rounded-[14px] flex flex-col shadow-[0_1px_2px_-1px_rgba(0,0,0,0.1),0_1px_3px_0_rgba(0,0,0,0.1)] border border-[#F3F4F6] overflow-hidden"          >
