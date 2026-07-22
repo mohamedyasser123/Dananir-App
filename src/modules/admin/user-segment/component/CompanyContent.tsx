@@ -5,10 +5,10 @@ import TableActionsHeader from "@/components/shared/TableActionsHeader"
 import SharedTable from "@/components/shared/SharedTable"
 import { SharedFormDialog } from "@/components/shared/dialog/SharedFormDialog"
 import BankStatsCards from "./bankscomponent/BankStatsCards"
-import CompaniesByCategoryChart from "./CompaniesByCategoryChart"
-import CompanySkeleton from "./CompanySkeleton"
-import CompanyError from "./CompanyError"
-import CompanyEmpty from "./CompanyEmpty"
+import CompaniesByCategoryChart from "./companycomponent/CompaniesByCategoryChart"
+import CompanySkeleton from "./companycomponent/CompanySkeleton"
+import CompanyError from "./companycomponent/CompanyError"
+import CompanyEmpty from "./companycomponent/CompanyEmpty"
 import { useDeleteCompany } from "../hooks/company/useDeleteCompany"
 import { useCreateCompany } from "../hooks/company/useCreateCompany"
 import { useUpdateCompany } from "../hooks/company/useUpdateCompany"
@@ -64,7 +64,7 @@ export default function CompanyContent({ data, isLoading, isError, error, refetc
   }
 
   const handleView = (company: Company) => {
-    navigate(`/admin/roles-permissions/company/${company.id}`)
+    navigate(`/admin/user-segment/company/${company.id}`)
   }
 
   const handleDelete = (id: string) => {

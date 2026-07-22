@@ -52,6 +52,7 @@ interface SharedTableProps {
   onEdit?: (row: any) => void;
   onDelete?: (id: any) => void;
   onView?: (row: any) => void;
+  onRowClick?: (row: any) => void;
   actionVariant?: "solid" | "ghost";
   
   showFilters?: boolean;
@@ -71,6 +72,7 @@ export default function SharedTable({
   onEdit,
   onDelete,
   onView,
+  onRowClick,
   actionVariant = "solid",
   showFilters = true,
   categoryOptions = [],
@@ -162,7 +164,10 @@ export default function SharedTable({
             {data.map((row) => (
               <TableRow
                 key={row.id}
-                className="border-b border-[#F3F4F6] hover:bg-slate-50/40 last:border-b-0 transition-colors"
+                onClick={() => onRowClick?.(row)}
+                className={`border-b border-[#F3F4F6] hover:bg-slate-50/40 last:border-b-0 transition-colors ${
+                  onRowClick ? "cursor-pointer" : ""
+                }`}
               >
                 {columns.map((col, idx) => {
                   const value = row[col.accessorKey];

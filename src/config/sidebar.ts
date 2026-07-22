@@ -36,31 +36,34 @@ export const sidebarConfig: SidebarItemConfig[] = [
         path: "/admin/roles-permissions/memberships",
         permission: "roles_permissions.memberships.view",
       },
-      {
-        title: "User segment",
+      
+    ],
+  },
+  {
+    title: "User segment",
         icon: Lock,
-        path: "/admin/roles-permissions/user-segment",
         permission: "roles_permissions.user_segment.view",
-      },
-      {
+         children:[
+          {
         title: "Banks",
         icon: Landmark,
-        path: "/admin/roles-permissions/banks",
-        permission: "roles_permissions.banks.view",
+        path: "/admin/user-segment/banks",
+        permission: "user_segment.banks.view",
       },
       {
         title: "Private",
         icon: Lock,
-        path: "/admin/roles-permissions/private",
-        permission: "roles_permissions.private.view",
+        path: "/admin/user-segment/private",
+        permission: "user_segment.private.view",
       },
       {
         title: "Company",
         icon: Building2,
-        path: "/admin/roles-permissions/company",
-        permission: "roles_permissions.company.view",
+        path: "/admin/user-segment/company",
+        permission: "user_segment.company.view",
       },
-    ],
+         ]
+
   },
   {
     title: "Communications",

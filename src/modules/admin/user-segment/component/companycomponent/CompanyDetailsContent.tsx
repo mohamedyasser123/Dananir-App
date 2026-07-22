@@ -3,8 +3,8 @@ import { ArrowLeft, Building2 } from "lucide-react"
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from "recharts"
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
-import type { UseCompanyResult } from "../hooks/company/useCompany"
-import { COMPANY_VISIBILITY_USERS } from "../constants/company.form"
+import type { UseCompanyResult } from "../../hooks/company/useCompany"
+import { COMPANY_VISIBILITY_USERS } from "../../constants/company.form"
 import CompanyDetailsSkeleton from "./CompanyDetailsSkeleton"
 import CompanyDetailsError from "./CompanyDetailsError"
 import CompanyDetailsEmpty from "./CompanyDetailsEmpty"
@@ -37,7 +37,7 @@ export default function CompanyDetailsContent({ data, isLoading, isError, error,
   return (
     <div className="w-full space-y-6 !px-6 !py-4">
       <Link
-        to="/admin/roles-permissions/company"
+        to="/admin/user-segment/company"
         className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-[#667085] hover:text-[#101828] transition-colors"
       >
         <ArrowLeft className="h-3.5 w-3.5" />
