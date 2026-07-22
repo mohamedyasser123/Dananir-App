@@ -1,4 +1,4 @@
-import PrivateContent from "../../components/PrivateContent"
+import PrivateContent from "../../component/PrivateContent"
 import { usePrivateUsers } from "../../hooks/private/usePrivateUsers"
 
 export default function PrivatePage() {

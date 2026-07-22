@@ -6,11 +6,11 @@ import PlatformManagmentAdmin from "../modules/admin/platformadmin/pages/Platfor
 import AdminDetailsPage from "../modules/admin/platformadmin/pages/AdminDetailsPage";
 import RolesAndPermissionsPage from "../modules/admin/rolesandpermissions/pages/RolesAndPermissionsPage";
 import MembershipsPage from "../modules/admin/rolesandpermissions/pages/memberships/MembershipsPage";
-import UserSegmentPage from "../modules/admin/rolesandpermissions/pages/usersegment/UserSegmentPage";
-import BanksPage from "../modules/admin/rolesandpermissions/pages/banks/BanksPage";
-import PrivatePage from "../modules/admin/rolesandpermissions/pages/private/PrivatePage";
-import CompanyPage from "../modules/admin/rolesandpermissions/pages/company/CompanyPage";
-import CompanyDetailsPage from "../modules/admin/rolesandpermissions/pages/company/CompanyDetailsPage";
+import BanksPage from "../modules/admin/user-segment/pages/banks/BanksPage";
+import PrivatePage from "../modules/admin/user-segment/pages/private/PrivatePage";
+import PrivateDetailsPage from "../modules/admin/user-segment/pages/private/PrivateDetailsPage";
+import CompanyPage from "../modules/admin/user-segment/pages/company/CompanyPage";
+import CompanyDetailsPage from "../modules/admin/user-segment/pages/company/CompanyDetailsPage";
 import NotificationsPage from "../modules/admin/communications/pages/notifications/NotificationsPage";
 import ChatsPage from "../modules/admin/communications/pages/chats/ChatsPage";
 import SmsPage from "../modules/admin/communications/pages/sms/SmsPage";
@@ -54,10 +54,11 @@ export const router = createBrowserRouter([
             path: "memberships",
             element: <MembershipsPage />,
           },
-          {
-            path: "user-segment",
-            element: <UserSegmentPage />,
-          },
+        ],
+      },
+      {
+        path: "user-segment",
+        children: [
           {
             path: "banks",
             element: <BanksPage />,
@@ -65,6 +66,10 @@ export const router = createBrowserRouter([
           {
             path: "private",
             element: <PrivatePage />,
+          },
+          {
+            path: "private/:id",
+            element: <PrivateDetailsPage />,
           },
           {
             path: "company",

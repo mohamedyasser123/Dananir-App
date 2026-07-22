@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 import { zodResolver } from "@hookform/resolvers/zod"
 import TableActionsHeader from "@/components/shared/TableActionsHeader"
 import SharedTable from "@/components/shared/SharedTable"
@@ -7,13 +8,14 @@ import BankStatsCards from "./bankscomponent/BankStatsCards"
 import PrivateListSkeleton from "./privatecomponent/PrivateListSkeleton"
 import PrivateListError from "./privatecomponent/PrivateListError"
 import PrivateListEmpty from "./privatecomponent/PrivateListEmpty"
-import { useCreatePrivateUser } from "../hooks/private/useCreatePrivateUser"
-import { useUpdatePrivateUser } from "../hooks/private/useUpdatePrivateUser"
-import { useDeletePrivateUser } from "../hooks/private/useDeletePrivateUser"
+
 import { filterPrivateUsers, isPrivateUsersEmpty } from "../utils/private.utils"
 import { PRIVATE_USER_FORM_FIELDS } from "../constants/private.form"
 import { createPrivateUserSchema, type CreatePrivateUserFormValues } from "../schemas/private.schema"
 import type { PrivateUser, PrivateUserStatus } from "../types/private.types"
+import { useCreatePrivateUser } from "../hooks/private/useCreatePrivateUser"
+import { useUpdatePrivateUser } from "../hooks/private/useUpdatePrivateUser"
+import { useDeletePrivateUser } from "../hooks/private/useDeletePrivateUser"
 import type { UsePrivateUsersResult } from "../hooks/private/usePrivateUsers"
 
 type PrivateUserDialogState =
@@ -38,6 +40,7 @@ export default function PrivateContent({ data, isLoading, isError, error, refetc
   const createPrivateUser = useCreatePrivateUser()
   const updatePrivateUser = useUpdatePrivateUser()
   const deletePrivateUser = useDeletePrivateUser()
+  const navigate = useNavigate()
 
   if (isLoading) return <PrivateListSkeleton />
   if (isError) return <PrivateListError message={error?.message} onRetry={refetch} />
@@ -59,6 +62,10 @@ export default function PrivateContent({ data, isLoading, isError, error, refetc
 
   const handleEdit = (user: PrivateUser) => {
     setDialogState({ mode: "edit", user })
+  }
+
+  const handleView = (user: PrivateUser) => {
+    navigate(`/admin/user-segment/private/${user.id}`)
   }
 
   const handleDelete = (id: string) => {
@@ -103,7 +110,7 @@ export default function PrivateContent({ data, isLoading, isError, error, refetc
         columns={columns}
         onEdit={handleEdit}
         onDelete={handleDelete}
-        onView={(user) => console.log("View user", user)}
+        onView={handleView}
       />
 
       <SharedFormDialog<CreatePrivateUserFormValues>
